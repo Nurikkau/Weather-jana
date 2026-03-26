@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода в твоём городе</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Погода сейчас</h1>
+        
+        <form action="/" method="POST">
+            <input type="text" name="city" placeholder="Введите название города (например, Aktau)" required>
+            <button type="submit">Показать погоду</button>
+        </form>
+
+        {{if .Error}}
+            <div class="error-message">
+                <p>{{.Error}}</p>
+            </div>
+        {{else if .Name}}
+            <div class="weather-card">
+                <h2>{{.Name}}</h2>
+                <div class="weather-main">
+                    <img src="http://openweathermap.org/img/wn/{{index .Weather 0 "Icon"}}@2x.png" alt="Icon">
+                    <p class="temp">{{printf "%.0f" .Main.Temp}}°C</p>
+                </div>
+                <p class="description">{{index .Weather 0 "Description"}}</p>
+            </div>
+        {{end}}
+    </div>
+</body>
+</html>
